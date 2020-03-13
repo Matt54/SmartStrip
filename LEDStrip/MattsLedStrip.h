@@ -9,28 +9,26 @@ public:
  int timerInterval = 10;
 
  int counter = 0; // needs to be an int because it can go up to NUM_LEDS
- 
+
  CRGB leds[433];
 
- byte rgb[3] = { 0 , 0 , 0 }; // main array for storing color values
+ CHSV chsv; // Color (Hue, Saturation, Value)
+ // Hue - color value from 0 - 255
+ // Saturation - Colorfulness
+ // Value - brightness
 
- // This will be used to adjust the color values manually
- byte relativeRGB[3] = {255 ,0 ,0  };
-
- byte maxB = 0;
- byte program_number = 1;
- byte mod = 25;
- bool isTurnaround = false;
+ uint8_t maxB = 0;
+ uint8_t program_number = 1;
+ uint8_t mod = 25;
  bool isBackwards = false;
  bool autoColor = true;
 
  bool isFading = false;
- byte thresholdCount = 0;
+ uint8_t thresholdCount = 0;
  int numLEDS;
 
  MattsLedStrip(int num);
  void CalculateMaxBrightness();
- void CalculateColor();
  void CheckTime();
  void StepStrip();
  void ProgramSetup();
@@ -40,9 +38,11 @@ public:
  void BounceCount();
  void AllOn();
  void FadeOut();
+ void Wave();
  void RandomColor();
  void ResetColor();
- void ChangeColor();
+ void ChangeHue();
  void ClearStrip();
  int getSoundLevel();
+
 };

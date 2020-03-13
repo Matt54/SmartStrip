@@ -10,9 +10,6 @@
 #define LED_TYPE WS2812
 #define NUM_LEDS 433
 #define DATA_PIN 6
-//CRGB leds[NUM_LEDS];
-
-uint8_t max_bright = 255;
 
 #include "MattsLedStrip.h"
 
@@ -21,10 +18,7 @@ MattsLedStrip *ptr;
 void setup() {
   ptr = new MattsLedStrip(433);
   Serial.begin(9600);
-
-  //FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(ptr->leds, 433);
-  FastLED.setBrightness(max_bright);
   set_max_power_in_volts_and_milliamps(5, 8000);
   FastLED.clear();
 
@@ -50,30 +44,23 @@ void AdjustSettings(int r,int val)
   switch (r)
   {
     case 0:
-      //ledStrip.timerInterval = val;
       ptr->timerInterval = val;
       Serial.println("In Register 0 :");
       Serial.println(val);
       Serial.println("");
       break;
     case 1:
-      /*ledStrip.mod = val;
-      ledStrip.CalculateMaxBrightness();
-      ledStrip.CalculateColor();*/
       ptr->mod = val;
       ptr->CalculateMaxBrightness();
-      ptr->CalculateColor();
       Serial.println("In Register 1 :");
       Serial.println(val);
       Serial.println("");
       break;
     case 2:
-      //ledStrip.program_number = val;
       ptr->program_number = val;
       Serial.println("In Register 2 :");
       Serial.println(val);
       Serial.println("");
-      //ledStrip.ProgramSetup();
       ptr->ProgramSetup();
   }
 }
@@ -96,7 +83,5 @@ void checkSoundLevel()
 }
 
 void loop() {
-  //ledStrip.CheckTime();
   ptr->CheckTime();
-  //checkSoundLevel();
 }
